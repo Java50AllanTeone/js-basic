@@ -1,5 +1,5 @@
 function numberValidation(number) {
-    number = typeof(number) == "boolean" ? "boolean" : number;
+    number = typeof(number) == "boolean" ? "boolean" : number; //checks if number has boolean value
 
         return isNaN(number) ? false : true;
 }

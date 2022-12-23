@@ -58,7 +58,7 @@ function reverse(number) {
 }
 
 function isNumber(number) {
-    number = typeof(number) == "boolean" ? "boolean" : number; //checks if number has boolean value
+    number = typeof(number) == "boolean" ? "boolean" : number; //checks if number has boolean value and prevents converting to numeric type
 
         return isNaN(number) ? false : true;
 }

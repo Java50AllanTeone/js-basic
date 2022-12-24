@@ -1,19 +1,30 @@
 function myParseInt(str, base) {
     base = base || 10;
+    str = str.trim();
+
+    const isNegative = str[0] == '-';
     let res = 0;
-    for(let i = 0; i < str.length; i++) {
-        res = res * base + getCode(str[i]);
+
+    for (let i = isNegative ? 1 : 0; i < str.length; i++) {  
+        let code = getCode(str[i], base);
+
+        if (isNaN(code)) {    
+            res = i > 0 ? res : code;
+            break;
+        }
+        res =  res * base + code;
     }
 
-    return res;
+    return isNegative ? -res : res;
 }
 
-function getCode(symbol) {
+function getCode(symbol, base) {
     symbol = symbol.toLowerCase();
     const codeA = 'a'.charCodeAt();
-    const res = symbol <= '9'? +symbol : symbol.charCodeAt() - codeA + 10;
+    const symbolCode = symbol.charCodeAt() - codeA + 10;
 
-    return res;
+    return symbol < 'a' || symbol > 'z' || symbolCode >= base ? +symbol : symbolCode;   
+    //verifies that symbol does not overstep the base numeric interval
 }
 
 function myToString(number, base) {
@@ -42,6 +53,10 @@ function getSymbol(digit) {
 function testFn(fn, arg, arg2, expRes) {
     const passMsg = `${fn.name} test are passed with argument ${arg} and base ${arg2 ? arg2 : 10}`;
     const errMsg = `there is some issue in ${fn.name} with argument ${arg} and base ${arg2 ? arg2 : 10}`;
+
+    if (isNaN(expRes)) {
+        return isNaN(fn(arg, arg2)) ? passMsg : errMsg;
+    }
     
     return fn(arg, arg2) === expRes ? passMsg : errMsg;
 }
@@ -55,12 +70,14 @@ console.log(testFn(myParseInt, "123.35", null, parseInt("123.35")));
 console.log(testFn(myParseInt, "-123", null, parseInt("-123")));
 console.log("");
 
-let num = 990500;
-console.log(testFn(myToString, num, null, num.toString()));
-console.log(testFn(myToString, num, 36, num.toString(36)));
-num = 123.45;
-console.log(testFn(myToString, num, 16, num.toString(16)));
-console.log(testFn(myToString, num, null, num.toString()));
-num = -123;
-console.log(testFn(myToString, num, null, num.toString()));
+
+
+// let num = 990500;
+// console.log(testFn(myToString, num, null, num.toString()));
+// console.log(testFn(myToString, num, 36, num.toString(36)));
+// num = 123.45;
+// console.log(testFn(myToString, num, 16, num.toString(16)));
+// console.log(testFn(myToString, num, null, num.toString()));
+// num = -123;
+// console.log(testFn(myToString, num, null, num.toString()));
 

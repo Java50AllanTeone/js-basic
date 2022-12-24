@@ -1,72 +1,66 @@
-// let str = "123m"
-// let num = parseInt(str) + 10 + 'm';
-// let str1 = "js.5";
-// let numInt = parseInt(str1, 32);
-// let numFloat = parseFloat(str1);
 function myParseInt(str, base) {
     base = base || 10;
     let res = 0;
     for(let i = 0; i < str.length; i++) {
-            res = res * base + getCode(str[i]);
+        res = res * base + getCode(str[i]);
     }
+
     return res;
 }
+
 function getCode(symbol) {
     symbol = symbol.toLowerCase();
     const codeA = 'a'.charCodeAt();
     const res = symbol <= '9'? +symbol : symbol.charCodeAt() - codeA + 10;
+
     return res;
 }
-// let str1 = "ff";
-// let str2 = "123";
-// let str22 = "Java";
-// let str3 = "123m"
-// let str4 = "123.5"
-// let num = parseInt(str1, 16);
-// let myNum = myParseInt(str1, 16);
-// num = parseInt(str2);
-// myNum = myParseInt(str2);
-// num = parseInt(str22, 36);
-// myNum = myParseInt(str22, 36);
-// num = parseInt(str3);
-// myNum = myParseInt(str3);
-// num = parseInt(str4);
-// myNum = myParseInt(str4);
-// let number = 255;
-// let str = "" + number;
-// str = number.toString(36);
+
 function myToString(number, base) {
     let res = '';
     base = base || 10;
     number = Math.trunc(Math.abs(number));
+
     do {
         const digit = number % base;
         const symbol = getSymbol(digit);
         res = symbol + res;
         number = Math.trunc(number / base);
+    } while (number);
 
-
-    }while(number);
     return res;
-
 }
+
 function getSymbol(digit) {
     const codeA = 'a'.charCodeAt();
-    let symbol;
-   if(digit < 10) {
-    symbol = "" + digit;
-   } else {
-     const codeAscii = digit - 10 + codeA;
-     symbol = String.fromCharCode(codeAscii);
-   }
-   return symbol;
+    let symbol = digit < 10 ? "" + digit : String.fromCharCode(digit - 10 + codeA);
 
+   return symbol;
 }
-let num100 = 990500;
-let str100 = num100.toString();
-let myStr100 = myToString(num100);
-str100 = num100.toString(36);
-myStr100 = myToString(num100, 36);
-num100 = 123.45;
-str100 = num100.toString(16);
-myStr100 = myToString(num100, 16);
+
+
+function testFn(fn, arg, arg2, expRes) {
+    const passMsg = `${fn.name} test are passed with argument ${arg} and base ${arg2 ? arg2 : 10}`;
+    const errMsg = `there is some issue in ${fn.name} with argument ${arg} and base ${arg2 ? arg2 : 10}`;
+    
+    return fn(arg, arg2) === expRes ? passMsg : errMsg;
+}
+
+console.log(testFn(myParseInt, "ff", 16, parseInt("ff", 16)));
+console.log(testFn(myParseInt, "123", null, parseInt("123")));
+console.log(testFn(myParseInt, "Java", 36, parseInt("Java", 36)));
+console.log(testFn(myParseInt, "zz", 16, NaN));
+console.log(testFn(myParseInt, "123m", null, parseInt("123m")));
+console.log(testFn(myParseInt, "123.35", null, parseInt("123.35")));
+console.log(testFn(myParseInt, "-123", null, parseInt("-123")));
+console.log("");
+
+let num = 990500;
+console.log(testFn(myToString, num, null, num.toString()));
+console.log(testFn(myToString, num, 36, num.toString(36)));
+num = 123.45;
+console.log(testFn(myToString, num, 16, num.toString(16)));
+console.log(testFn(myToString, num, null, num.toString()));
+num = -123;
+console.log(testFn(myToString, num, null, num.toString()));
+

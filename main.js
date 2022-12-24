@@ -1,5 +1,5 @@
 const ERR_MSG = "number is not valid";
-const TEST_PASS = " tests are passed";
+const TEST_PASS = " test are passed";
 const TEST_ERR = "there is some issue in ";
 
 function getDigitsSum(number) {
@@ -63,38 +63,20 @@ function isNumber(number) {
         return isNaN(number) ? false : true;
 }
 
-function testGetDigitsSum(number, result) {
-    return getDigitsSum(number) === result;
+function testFn(fn, arg, expRes) {
+    return fn(arg) === expRes ? fn.name + TEST_PASS : TEST_ERR + fn.name ;
 }
 
-function testComputeExpression(expression, result) {
-    return computeExpression(expression) === result;
-}
+console.log(testFn(getDigitsSum, 123.45, 6));   //test getDigitsSum
+console.log(testFn(getDigitsSum, -280.123, 10));
+console.log(testFn(getDigitsSum, 123, 6));
 
-function testPrintAnanas(string) {
-    return printAnanas() === string;
-}
+console.log(testFn(computeExpression, "9000 / ((10 + 20) ** 2)", 10));  //test computeExpression
+console.log(testFn(computeExpression, "9 + 100 / 2", 59));
 
-function testReverse(number, result) {
-    return reverse(number) === result;
-}
+console.log(testFn(printAnanas, null, "ananas"));   // test printAnanas
 
-function test() {
-    const digitsSumRes = (testGetDigitsSum(123.45, 6) && testGetDigitsSum(-280.123, 10) && testGetDigitsSum(123, 6)) ? 
-        "digit sum" + TEST_PASS : TEST_ERR + "digit sum";
-
-    const computeExpRes = (testComputeExpression("9000 / ((10 + 20) ** 2)", 10) && testComputeExpression("9 + 100 / 2", 59)) ?
-        "compute expression" + TEST_PASS : TEST_ERR + "compute expressions";
-
-    const ananasRes = (testPrintAnanas("ananas")) ? "print ananas" + TEST_PASS : TEST_ERR + "in print ananas";
-
-    const reverseRes = (testReverse(123.45, "321") && testReverse(-280.123, "-082") && 
-        testReverse(123, "321") && testReverse(-123, "-321")) ? "reverse" + TEST_PASS : TEST_ERR + "reverse";
-
-    console.log(digitsSumRes);
-    console.log(computeExpRes);
-    console.log(ananasRes);
-    console.log(reverseRes);
-}
-
-test();
+console.log(testFn(reverse, 123.45, "321"));    //test reverse
+console.log(testFn(reverse, -280.123, "-082"));
+console.log(testFn(reverse, 123, "321"));
+console.log(testFn(reverse, -123, "-321"));

@@ -1,6 +1,5 @@
 const ERR_MSG = "number is not valid";
-const TEST_PASS = " test are passed";
-const TEST_ERR = "there is some issue in ";
+
 
 function getDigitsSum(number) {
     let res = 0;
@@ -64,8 +63,12 @@ function isNumber(number) {
 }
 
 function testFn(fn, arg, expRes) {
-    return fn(arg) === expRes ? fn.name + TEST_PASS : TEST_ERR + fn.name ;
+    const passMsg = `${fn.name} test are passed`;
+    const errMsg = `there is some issue in ${fn.name} with argument ${arg}`;
+    
+    return fn(arg) === expRes ? passMsg : errMsg;
 }
+
 
 console.log(testFn(getDigitsSum, 123.45, 6));   //test getDigitsSum
 console.log(testFn(getDigitsSum, -280.123, 10));
@@ -79,4 +82,4 @@ console.log(testFn(printAnanas, null, "ananas"));   // test printAnanas
 console.log(testFn(reverse, 123.45, "321"));    //test reverse
 console.log(testFn(reverse, -280.123, "-082"));
 console.log(testFn(reverse, 123, "321"));
-console.log(testFn(reverse, -123, "-321"));
+console.log(testFn(reverse, -123, "-32"));

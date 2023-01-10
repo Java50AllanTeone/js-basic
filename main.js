@@ -22,3 +22,16 @@ function isValid(array) {
     }
     return true;
 }
+
+function transpMatrix(array) {
+    const res = [];
+
+    for (let i = 0; i < array[i].length; i++) {
+        res.push([]);
+
+        for (let j = 0; j < array.length; j++) {
+            res[i].push(array[j][i]);
+        }
+    }
+    return res;
+}

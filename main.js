@@ -35,8 +35,33 @@ function evenAscOddDesc(array) {
         return result;
     });
     return res;
-
 }
 
-console.log(evenOddSort([20, -10, 333, 1000, 552, 7, -7]));
-console.log(evenAscOddDesc([20, -10, 333, 1000, 552, 7, -7]));
+function getMin(array) {
+    const result = array.reduce(function(res, cur) {
+        return res < cur ? res : cur;
+    });
+
+    return result;
+}
+
+function getMax(array) {
+    const result = array.reduce(function(res, cur) {
+        return res > cur ? res : cur;
+    });
+
+    return result;
+}
+
+function getMinMaxAvg(array) {
+    const result = array.reduce(function(res, cur, index) {
+        res[0] = res[0] < cur ? res[0] : cur;
+        res[1] = res[1] > cur ? res[1] : cur;
+        res[2] += cur;
+        return res;
+
+    }, [array[0], array[0], 0]);
+
+    result[2] /= array.length;
+    return result;
+}

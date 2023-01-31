@@ -9,3 +9,12 @@
     width: 4vw;
     height: 4vw
 }
+
+section > div {
+    width: 20px;
+    margin: 10px 2px;
+}
+
+.bg-black {
+    background-color: black;
+}

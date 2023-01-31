@@ -17,25 +17,56 @@ function startGame(){
     wordInputElement.value = '';
     wordInputElement.readOnly = true;
     questionElement.innerHTML = questionsWords[currentIndex][0];
-    playAgain.style.display='none'
+    playAgain.style.display='none';
     resultMessage.innerHTML='';
     wordElement.innerHTML = getWordDivs();
 
+    initialLettersNumber = questionsWords[currentIndex][0].length;
+    remainedLettersNumber = Math.floor(initialLettersNumber * 0.3);
+
+
 }
+
 function getWordDivs() {
-    //TODO
+    const arr = Array.from(questionsWords[currentIndex][1]);
+
+    return arr.reduce(function(accumulator, cur) {
+        return accumulator + `<div class="bg-black">${cur}</div>`;
+    }, "");
 }
+
 function checkWord() {
-  //TODO
+  const msg = wordInputElement.value === questionsWords[currentIndex][1] ? "True" : "False";
+  finishGame(msg);
 }
+
 function processLetter() {
-    //TODO
+    const letters = document.querySelectorAll(".bg-black");
+
+    letters.forEach(function(item) {
+        if (item.innerHTML === letterInputElement.value) {
+            item.removeAttribute("class");
+        }
+    });
+
+    remainedLettersNumber--;
+    resultMessage.innerHTML = remainedLettersNumber;
+
+    if (remainedLettersNumber == 0) {
+        takeChance();
+    }
 }
+
 function takeChance() {
-    //TODO
+    wordInputElement.readOnly = false;
+    letterInputElement.readOnly = true;
 }
-function finishGame() {
-    //TODO
+
+function finishGame(msg) {
+    resultMessage.innerHTML = msg;
+    playAgain.style.display='block';
+    wordInputElement.readOnly = true;
+
 }
 //actions
 startGame();

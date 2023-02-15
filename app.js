@@ -112,17 +112,90 @@ function testComputeSalaryBudget(employees) {
 }
 
 
-console.log(testGetEmployee(employees, 126));
 
-console.log(testGetEmployeesBySalary(employees, 13000, 13000, [employees[3]]));
-console.log(testGetEmployeesBySalary(employees, 10000, 10000, [employees[5], employees[7]]));
-console.log(testGetEmployeesBySalary(employees, 0, 30000, [employees[0], employees[1], employees[2], employees[3], employees[4], employees[5], employees[6], employees[7]]));
 
-console.log(testGetEmployeesByCity(employees, "Tel Aviv", [employees[1]]));
-console.log(testGetEmployeesByCity(employees, "Lod", [employees[0], employees[4], employees[7]]));
 
-console.log(testGetEmployeeNames(employees, ["Vasya", "David", "Sara", "Abraham", "Moshe", "Goga", "Sasha", "Victor"]));
 
-console.log(testSortEmployeesByAge(employees, [2003, 2000, 2000, 2000, 1993, 1990, 1985, 1975]));
+function reducer(res, empl) {
+    const newRes = res + empl.salary;
+    return newRes
+}
+let field = "salary";
+function displayFieldValue(employees, index, field) {
+    console.log(employees[index][field]);
+}
+//displayFieldValue(employees, 3, "id");
+// employees[0].salary = 20000;
+// employees[0].department = "QA";
+// displayFieldValue(employees, 0, "department");
+// delete employees[0].department
+// displayFieldValue(employees, 0, "department");
+function computeMinMaxAvgSalary(employees) {
+    const res =  employees.reduce((res, empl) => {
+        if (res.minSalary > empl.salary) {
+            res.minSalary = empl.salary;
+        } else if (res.maxSalary < empl.salary) {
+            res.maxSalary = empl.salary;
+        }
+        res.avgSalary += empl.salary;
+        return res;
 
-console.log(testComputeSalaryBudget(employees));
+    }, {minSalary: employees[0].salary, maxSalary: employees[0].salary, avgSalary: 0});
+    res.avgSalary = res.avgSalary / employees.length;
+    return res;
+}
+function displayValue(minMaxAvg, field) {
+    console.log(`value of the field ${field} is ${minMaxAvg[field]}`)
+};
+const minMaxAvg = computeMinMaxAvgSalary(employees);
+// displayValue(minMaxAvg,"avgSalary");
+// displayValue(minMaxAvg,"minSalary");
+// displayValue(minMaxAvg,"maxSalary");
+const strings = ["b", "xyz", "lmn", "xyz", "lmn", "xyz", "a"];
+//assumed result:
+//xyz -> 3
+//lmn -> 2
+//a -> 1
+//b -> 1
+function displayStringOccurrences(strings) {
+    const stringOccurrences = getStringOccurrences(strings);
+    const arrayOccurrences = Object.entries(stringOccurrences);
+    arrayOccurrences.sort(stringComp);
+    arrayOccurrences.forEach(entry => console.log(`${entry[0]} -> ${entry[1]}`));
+}
+function getStringOccurrences(strings) {
+    const res = {};
+    strings.forEach(str => {
+        if(!res[str]) {
+            res[str] = 1;
+        } else {
+            res[str]++;
+        }
+    });
+    return res;
+}
+function stringComp(entry1, entry2) {
+    let res = entry2[1] - entry1[1];
+    if (res == 0){
+        res = entry1[0] < entry2[0] ? -1 : 1
+    }
+    return res;
+}
+displayStringOccurrences(strings);
+//HW #19
+function getMostPopulatedCountry(employees) {
+    //TODO 
+    //returns country with most amount of employees
+}
+function getMostPupulatedCountries(employees, counter) {
+    //returns a given number (conter) of countries with most amount of employees
+}
+function isAnagram(word, anagram) {
+    //TODO 
+    //returns true if a given anagram is indeed an angram of a given word
+    //anagram must have  same length as word
+    //anagram must have all letters from word
+    //hello anagram examples: elolh, olleh, ohell, lehol
+    //exampls non-anagrams: eloll (no h), ollehh(different length),
+    // olaeh ("a" doesn't exist in word), oleh(different length)
+}

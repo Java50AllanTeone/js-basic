@@ -65,12 +65,9 @@ function sortEmployeesByAge(employees) {
 
 function computeSalaryBudget(employees) {
     
-    return employees.reduce(function(acc, cur) {
+    return employees.reduce(function(acc, cur) {        //computes and returns total salary for all Employee objects
         return acc + cur.salary;
     }, 0);
-
-
-    //computes and returns total salary for all Employee objects
 }
 
 

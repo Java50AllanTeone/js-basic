@@ -27,89 +27,7 @@ const index = employees.findIndex(function(empl) {
 const employee = employees.find(function(empl) {
     return empl.id === 126;
 })
-//HW #18
-function getEmployee(employees, id) {
 
-    return employees.find(function(e) {     //returns reference to an Employee object with a given id value
-        return e.id === id;
-    });
-}
-
-function getEmployeesBySalary(employees, salaryFrom, salaryTo) {
-
-    return employees.filter(function(e) {       //returns array of Employee objects that have salary in [salaryFrom, salaryTo]
-        return e.salary >= salaryFrom && e.salary <= salaryTo;
-    });
-}
-
-function getEmployeesByCity(employees, city) {
-    
-    return employees.filter(function(e) {    //returns array of Employee objects from a given city   
-        return e.address.city === city;
-    }); 
-}
-
-function getEmployeeNames(employees) {
-
-    return employees.map(function(e) {      //returns array of all Employee names
-        return e.name;
-    })
-}
-
-function sortEmployeesByAge(employees) {
-    
-    return employees.sort(function(e1, e2) {        //returns array of Employee objects sorted by age in ascending order
-        return e2.birthYear - e1.birthYear;
-    })
-}
-
-function computeSalaryBudget(employees) {
-    
-    return employees.reduce(function(acc, cur) {        //computes and returns total salary for all Employee objects
-        return acc + cur.salary;
-    }, 0);
-}
-
-
-//TESTS
-
-function testGetEmployee(employees, id) {
-    return `test getEmployee has result ${getEmployee(employees, id).id === id}`;
-}
-
-function testGetEmployeesBySalary(employees, salaryFrom, salaryTo, result) {
-    const res = getEmployeesBySalary(employees, salaryFrom, salaryTo);
-
-    return `test getEmployeeBySalary has result ${JSON.stringify(res) === JSON.stringify(result)}`;
-}
-
-function testGetEmployeesByCity(employees, city, result) {
-    const res = getEmployeesByCity(employees, city);
-
-    return `test getEmployeesByCity has result ${JSON.stringify(res) === JSON.stringify(result)}`;
-}
-
-function testGetEmployeeNames(employees, result) {
-    return `test getEmployeeByNames has result ${getEmployeeNames(employees).toString() === result.toString()}`;
-}
-
-function testSortEmployeesByAge(employees, result) {
-    const res = sortEmployeesByAge(employees).map(function(e) {
-        return e.birthYear;
-    });
-
-    return `test sortEmployeesByAge has result ${res.toString() === result.toString()}`;
-}
-
-function testComputeSalaryBudget(employees) {
-    let res = 0;
-
-    for (let i = 0; i < employees.length; i++) {
-        res += employees[i].salary;
-    }
-
-    return `test computeSalaryBudget has result ${computeSalaryBudget(employees) === res}`;
-}
 
 
 
@@ -120,16 +38,14 @@ function reducer(res, empl) {
     const newRes = res + empl.salary;
     return newRes
 }
+
 let field = "salary";
+
 function displayFieldValue(employees, index, field) {
     console.log(employees[index][field]);
 }
-//displayFieldValue(employees, 3, "id");
-// employees[0].salary = 20000;
-// employees[0].department = "QA";
-// displayFieldValue(employees, 0, "department");
-// delete employees[0].department
-// displayFieldValue(employees, 0, "department");
+
+
 function computeMinMaxAvgSalary(employees) {
     const res =  employees.reduce((res, empl) => {
         if (res.minSalary > empl.salary) {
@@ -144,25 +60,24 @@ function computeMinMaxAvgSalary(employees) {
     res.avgSalary = res.avgSalary / employees.length;
     return res;
 }
+
 function displayValue(minMaxAvg, field) {
     console.log(`value of the field ${field} is ${minMaxAvg[field]}`)
 };
+
 const minMaxAvg = computeMinMaxAvgSalary(employees);
-// displayValue(minMaxAvg,"avgSalary");
-// displayValue(minMaxAvg,"minSalary");
-// displayValue(minMaxAvg,"maxSalary");
+
+
 const strings = ["b", "xyz", "lmn", "xyz", "lmn", "xyz", "a"];
-//assumed result:
-//xyz -> 3
-//lmn -> 2
-//a -> 1
-//b -> 1
+
+
 function displayStringOccurrences(strings) {
     const stringOccurrences = getStringOccurrences(strings);
     const arrayOccurrences = Object.entries(stringOccurrences);
     arrayOccurrences.sort(stringComp);
     arrayOccurrences.forEach(entry => console.log(`${entry[0]} -> ${entry[1]}`));
 }
+
 function getStringOccurrences(strings) {
     const res = {};
     strings.forEach(str => {
@@ -174,6 +89,7 @@ function getStringOccurrences(strings) {
     });
     return res;
 }
+
 function stringComp(entry1, entry2) {
     let res = entry2[1] - entry1[1];
     if (res == 0){
@@ -181,6 +97,7 @@ function stringComp(entry1, entry2) {
     }
     return res;
 }
+
 displayStringOccurrences(strings);
 //HW #19
 function getMostPopulatedCountry(employees) {

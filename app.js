@@ -16,7 +16,7 @@ const employees = [
     createEmployee(125, "Sara", 1985, 20000, "New York", "USA"),
     createEmployee(126, "Abraham", 1990, 13000, "London", "UK"),
     createEmployee(127, "Moshe", 2000, 15000, "Lod", "Israel"),
-    createEmployee(128, "Goga", 1993, 10000, "Tbilisi", "Georgia"),
+    createEmployee(128, "Goga", 1993, 10000, "Tbilisi", "UK"),
     createEmployee(129, "Sasha", 2000, 25000, "Ramat Gan", "Israel"),
     createEmployee(130, "Victor", 2003, 10000, "Lod", "Israel")
 ]
@@ -27,10 +27,6 @@ const index = employees.findIndex(function(empl) {
 const employee = employees.find(function(empl) {
     return empl.id === 126;
 })
-
-
-
-
 
 
 
@@ -98,21 +94,50 @@ function stringComp(entry1, entry2) {
     return res;
 }
 
-displayStringOccurrences(strings);
+//displayStringOccurrences(strings);
+
+
+
+
 //HW #19
-function getMostPopulatedCountry(employees) {
-    //TODO 
-    //returns country with most amount of employees
+function getMostPopulatedCountry(employees) {       //returns country with most amount of employees
+    
+    const stringOccurrences = getStringOccurrences(employees.map(e => e.address.country));
+    const arrayOccurrences = Object.entries(stringOccurrences);
+
+    const res = arrayOccurrences.reduce((res, cur) => {
+        if (res[1] < cur[1]) {
+            res = cur;
+        }
+        return res;
+    });
+    return res[0];
 }
-function getMostPupulatedCountries(employees, counter) {
-    //returns a given number (conter) of countries with most amount of employees
+
+
+function getMostPupulatedCountries(employees, counter) {        //returns a given number (conter) of countries with most amount of employees
+    const res = [];
+
+    const stringOccurrences = getStringOccurrences(employees.map(e => e.address.country));
+    const arrayOccurrences = Object.entries(stringOccurrences);
+    arrayOccurrences.sort((e1, e2) => e2[1] - e1[1]);
+
+    for (let i = 0; i < counter; i++) {
+        res.push(arrayOccurrences[i][0]);
+    }
+
+    return res;
 }
-function isAnagram(word, anagram) {
-    //TODO 
-    //returns true if a given anagram is indeed an angram of a given word
-    //anagram must have  same length as word
-    //anagram must have all letters from word
-    //hello anagram examples: elolh, olleh, ohell, lehol
-    //exampls non-anagrams: eloll (no h), ollehh(different length),
-    // olaeh ("a" doesn't exist in word), oleh(different length)
+
+
+function isAnagram(word, anagram) {     //returns true if a given anagram is indeed an angram of a given word
+    const wordArr = Array.from(word);
+    const anagramArr = Array.from(anagram);
+    wordArr.sort((e1, e2) => e1 < e2 ? -1 : 1);
+    anagramArr.sort((e1, e2) => e1 < e2 ? -1 : 1);
+
+    return wordArr.toString() === anagramArr.toString();
 }
+
+console.log(getMostPupulatedCountries(employees, 3));
+console.log(isAnagram("word", "drow"));

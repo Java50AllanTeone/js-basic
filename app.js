@@ -116,17 +116,12 @@ function getMostPopulatedCountry(employees) {       //returns country with most 
 
 
 function getMostPupulatedCountries(employees, counter) {        //returns a given number (conter) of countries with most amount of employees
-    const res = [];
 
     const stringOccurrences = getStringOccurrences(employees.map(e => e.address.country));
     const arrayOccurrences = Object.entries(stringOccurrences);
     arrayOccurrences.sort((e1, e2) => e2[1] - e1[1]);
 
-    for (let i = 0; i < counter; i++) {
-        res.push(arrayOccurrences[i][0]);
-    }
-
-    return res;
+    return arrayOccurrences.slice(0, counter);
 }
 
 

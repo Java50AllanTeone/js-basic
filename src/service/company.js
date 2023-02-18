@@ -125,13 +125,13 @@ function isAnagram(word, anagram) {     //returns true if a given anagram is ind
     return wordArr.toString() === anagramArr.toString();
 }
 
-// Employe structure and function createEmployee() taken from previous HW
-function createEmployee(id, name, birthYear, salary, city, country) {
+// Employee structure and function createEmployee() taken from previous HW
+export function createEmployee(id, name, birthYear, salary, city, country) {
     return {id, name, birthYear, salary, address: {city, country}}
 }
 
 
-class Company {
+export class Company {
     #employees; //object key: <id value>, value: reference to Employee object
 
     constructor() {
@@ -184,19 +184,3 @@ class Company {
         });
     }
 }
-
-const comp = new Company();
-comp.addEmployee(createEmployee(123, "Vasya", 2000, 15000, "Lod", "Israel"));
-comp.addEmployee(createEmployee(124, "David", 1975, 15500, "Tel Aviv", "Israel"));
-comp.addEmployee(createEmployee(125, "Sara", 1985, 20000, "New York", "USA"));
-comp.addEmployee(createEmployee(126, "Abraham", 1990, 13000, "London", "UK"));
-comp.addEmployee(createEmployee(127, "Moshe", 2000, 15000, "Lod", "Israel"));
-comp.addEmployee(createEmployee(128, "Goga", 1993, 10000, "Tbilisi", "UK"));
-comp.addEmployee(createEmployee(129, "Sasha", 2000, 25000, "Ramat Gan", "Israel"));
-comp.addEmployee(createEmployee(130, "Victor", 2003, 10000, "Lod", "Israel"));
-
-
-console.log(comp);
-
-const arrCountry = comp.getEmployeesBySalaries(10000, 15000);
-console.log(arrCountry);

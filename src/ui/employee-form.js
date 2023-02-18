@@ -1,10 +1,6 @@
 import { employeeConfig } from "../service/config/employee-config.js";
 
-function errAlert(msg) {
-    if (msg) {
-        alert(msg);
-    }
-}
+
 
 export class EmployeeForm {
     #formElement;
@@ -67,7 +63,13 @@ export class EmployeeForm {
                 res[inputElement.name] = inputElement.value;
                 return res;
             }, {});
-        errAlert(handlerFun(employeeData));
+        let msg = handlerFun(employeeData);
+
+        if (msg) {
+            alert(msg)
+        } else {
+            this.#formElement.reset();
+        }
         });
     }
 

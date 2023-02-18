@@ -51,8 +51,9 @@ export class Company {
     }
 
     addEmployeeUniqueId(empl) {
+        
         do {
-            empl.id = getRandomNumber(employeeConfig.midId, employeeConfig.maxId);
+            empl.id = getRandomNumber(employeeConfig.midId, employeeConfig.maxId + 1);
         } while(this.getEmployeeById(empl.id));
     }
 

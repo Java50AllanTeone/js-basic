@@ -1,9 +1,7 @@
 import { Company, createEmployee } from "./service/company.js";
 import { EmployeeForm } from "./ui/employee-form.js";
-import { getRandomNumber } from "./utils/random.js";
+//import { getRandomNumber } from "./utils/random.js";
 
-const MIN_ID = 100000000;
-const MAX_ID = 999999999;
 
 const company = new Company();
 

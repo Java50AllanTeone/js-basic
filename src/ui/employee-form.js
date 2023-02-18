@@ -61,9 +61,13 @@ export class EmployeeForm {
                 res[inputElement.name] = inputElement.value;
                 return res;
             }, {});
-        handlerFun(employeeData);
+        let msg = handlerFun(employeeData);
+
+        if (msg) {
+            alert(msg);
+        }
         });
     }
 
-    
+
 } 

@@ -1,7 +1,31 @@
+import { getRandomNumber } from "../utils/random.js";
+import { employeeConfig } from "./config/employee-config.js";
 
 // Employee structure and function createEmployee() taken from previous HW
-export function createEmployee(id, name, birthYear, salary, city, country) {
-    return {id, name, birthYear, salary, address: {city, country}}
+export function createEmployee(name, birthYear, salary, city, country) {
+    return {name, birthYear, salary, address: {city, country}}
+}
+
+function employeeSalaryValidation(empl) {
+    let res = "";
+
+    if (empl.salary < employeeConfig.minSalary) {
+        res = `salary must not be less then ${employeeConfig.minSalary}\n`;
+    } else if (empl.salary > employeeConfig.maxSalary) {
+        res = `salary must not be greater then ${employeeConfig.maxSalary}\n`;
+    }
+    return res;
+}
+
+function employeeYearValidation(empl) {
+    let res = "";
+
+    if (empl.birthYear < employeeConfig.minYear) {
+        res = `birth Year must not be less then ${employeeConfig.minYear}\n`;
+    } else if (empl.birthYear > employeeConfig.maxYear) {
+        res = `birth Year must not be greater then ${employeeConfig.maxYear}\n`;
+    }
+    return res;
 }
 
 
@@ -13,11 +37,32 @@ export class Company {
     }
 
     addEmployee(empl) {
-        let res = true;
+        let msg = "";
 
-        this.#employees[empl.id] ? res = false : this.#employees[empl.id] = empl;
-        return res;
+        this.addEmployeeUniqueId(empl)
+
+        msg += employeeSalaryValidation(empl);
+        msg += employeeYearValidation(empl);
+
+        if (!msg) {
+            this.#employees[empl.id] = empl;
+        }
+        return msg;
     }
+
+    addEmployeeUniqueId(empl) {
+        do {
+            empl.id = getRandomNumber(employeeConfig.midId, employeeConfig.maxId);
+        } while(this.getEmployeeById(empl.id));
+    }
+
+    getEmployeeById(id) {
+        if (this.#employees[id]) {
+            return this.#employees[id];
+        }
+    }
+
+
 
     removeEmployee(id) {
         let res = true;
@@ -52,8 +97,7 @@ export class Company {
                 res = e.salary >= salryFrom;
             } else {
                 res = e.salary >= salryFrom && e.salary <= salryTo;
-            }
-            
+            }  
             return res;
         });
     }

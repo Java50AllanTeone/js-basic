@@ -1,5 +1,11 @@
 import { employeeConfig } from "../service/config/employee-config.js";
 
+function errAlert(msg) {
+    if (msg) {
+        alert(msg);
+    }
+}
+
 export class EmployeeForm {
     #formElement;
     #citiesElement;
@@ -61,11 +67,7 @@ export class EmployeeForm {
                 res[inputElement.name] = inputElement.value;
                 return res;
             }, {});
-        let msg = handlerFun(employeeData);
-
-        if (msg) {
-            alert(msg);
-        }
+        errAlert(handlerFun(employeeData));
         });
     }
 

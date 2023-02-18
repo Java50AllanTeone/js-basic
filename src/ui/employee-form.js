@@ -66,7 +66,7 @@ export class EmployeeForm {
         let msg = handlerFun(employeeData);
 
         if (msg) {
-            alert(msg)
+            alert(msg);
         } else {
             this.#formElement.reset();
         }

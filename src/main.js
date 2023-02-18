@@ -1,17 +1,31 @@
 import { Company, createEmployee } from "./service/company.js";
 import { EmployeeForm } from "./ui/employee-form.js";
+import { Table } from "./ui/table.js";
 //import { getRandomNumber } from "./utils/random.js";
+
+const schema = [
+    {columnName: "Employee ID", fieldName: "id"},
+    {columnName: "Name", fieldName: "name"},
+    {columnName: "Birth Year", fieldName: "birthYear"},
+    {columnName: "Salary (NIS)", fieldName: "salary"},
+    {columnName: "Country", fieldName: "country"},
+    {columnName: "City", fieldName: "city"}
+];
 
 
 const company = new Company();
-
-
 const employeeForm = new EmployeeForm("form-section");
+const tableEmployee = new Table("table-section", "Employees", schema);
 
 function addEmployee(employeeData) {
 
     const employee = createEmployee(employeeData.name, +employeeData.birthYear, +employeeData.salary, employeeData.city, employeeData.country);
-    return company.addEmployee(employee);
+    const res = company.addEmployee(employee);
+    if (!res.message) {
+        employeeData.id = res.id;
+        tableEmployee.addRow(employeeData);
+    }
+    return res.message;
 }
 
 employeeForm.addFormHandler(addEmployee);

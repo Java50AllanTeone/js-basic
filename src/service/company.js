@@ -47,7 +47,7 @@ export class Company {
         if (!msg) {
             this.#employees[empl.id] = empl;
         }
-        return msg;
+        return {message: msg, id: empl.id};
     }
 
     addEmployeeUniqueId(empl) {
@@ -101,5 +101,9 @@ export class Company {
             }  
             return res;
         });
+    }
+
+    getAllEmployees() {
+        return Object.values(this.#employees);
     }
 }
